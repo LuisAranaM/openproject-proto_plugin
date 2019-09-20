@@ -1,0 +1,20 @@
+<% html_title t(:label_risks) %>
+
+<h1><%= t(:label_risks) %></h1>
+
+<p>
+  These are the risks from the <%= t(:project_id)%> module:
+</p>
+
+<ul ng-controller="risksController as risks">
+  <% @risks.each do |risk| %>
+    <li ng-click="showMessage()"><%= risk.name %></li>
+  <% end %>
+</ul>
+
+
+<%= link_to 'Call Action', { :controller => "risks", :action => "new"}, method: :get %>
+
+
+<%= render "shared/kitty_image" %>
+

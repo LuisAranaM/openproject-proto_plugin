@@ -3,7 +3,7 @@
 <h1><%= t(:label_kittens) %></h1>
 
 <p>
-  These are the kittens:
+  These are the kittens from the <%= t(:project_id)%> module:
 </p>
 
 <ul ng-controller="KittensController as kittens">
@@ -12,4 +12,9 @@
   <% end %>
 </ul>
 
+
+<%= link_to 'Call Action', { :controller => "kittens", :action => "new"}, method: :get %>
+
+
 <%= render "shared/kitty_image" %>
+

@@ -34,6 +34,20 @@ module OpenProject::ProtoPlugin
            icon: 'icon2 icon-bug',
            html: { id: "kittens-menu-item" },
            if: ->(project) { true }
+
+      project_module :risks_module do
+        permission :view_risks, { risks: [:index] }
+      end
+    
+          menu :project_menu,
+               :risks,
+               { controller: '/risks', action: 'index' },
+               after: :overview,
+               param: :project_id,
+               caption: "Risks",
+               icon: 'icon2 icon-bug',
+               html: { id: "risks-menu-item" },
+               if: ->(project) { true }
     end
 
     initializer 'proto_plugin.register_hooks' do

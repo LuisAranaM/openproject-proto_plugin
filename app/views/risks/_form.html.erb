@@ -1,0 +1,17 @@
+<%= form_for(risk) do |f| %>
+
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <% if risk.errors[:name].length %>
+          <span class="risk-error"><%= risk.errors[:name].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <div class="widget-box--blocks--buttons">
+        <button type="submit" class="button -alt-highlight" title="New risk">
+            <span class="button--text">Create risk</span>
+        </button>
+    </div>
+
+<% end %>
