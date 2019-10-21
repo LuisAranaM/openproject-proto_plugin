@@ -1,0 +1,53 @@
+<% html_title t(:label_risk_rules) -%>
+
+<% any_risk_rules= @risk_rules.any? %>
+
+<%= toolbar title: t(:label_risk_rules) do %>
+
+  <li class="toolbar-item">
+  <%= link_to risks_path(),
+      { class: 'button',
+        id: 'new_news_link',
+        aria: {label: t(:label_risks)},
+        title: t(:label_risks)} do %>
+    <span class="button--text"><%= t(:label_risks) %></span>
+  <% end %>
+</li>
+
+  <% if any_risk_rules %>
+    <li class="toolbar-item">
+      <button id="filter-member-button"
+              focus
+              title="<%= I18n.t(:description_filter) %>"
+              class="toggle-member-filter-link button">
+        <%= op_icon('button--icon icon-filter') %>
+      </button>
+    </li>
+  <% end %>
+<% end %>
+
+
+
+
+
+<div>
+  <% if any_risk_rules %>
+  <% @risk_rules.each do |risk_rule| %>
+
+    <li> <%= link_to risks_path(),
+      { class: 'button',
+        id: 'new_news_link',
+        aria: {label: t(risk_rule.name)},
+        title: t(risk_rule.name)} do %>
+    <span class="button--text"><%= t(risk_rule.name) %></span>
+  <% end %>:<%= risk_rule.description%></li>
+    
+  <% end %>
+  <% elsif @is_filtered %>
+    <%= no_results_box custom_title: t(:notice_no_principals_found) %>
+  <% else %>
+    <%= no_results_box %>
+  <% end %>
+</div>
+
+

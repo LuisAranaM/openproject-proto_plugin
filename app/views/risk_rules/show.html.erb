@@ -1,0 +1,11 @@
+<% html_title t(@risk.name) %>
+
+<h1><%= @risk.name %></h1>
+<h1><%= @risk.status %></h1>
+<h1><%= @risk.description %></h1>
+<h1><%= @risk.probability %></h1>
+<h1><%= @risk.impact %></h1>
+
+
+<%= link_to "Edit", edit_risk_path(@risk)%>
+<%= link_to 'Back', { :controller => "risks", :action => "index"}, method: :get %>

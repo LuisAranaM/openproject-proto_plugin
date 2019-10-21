@@ -1,0 +1,2 @@
+class Impact < ApplicationRecord
+end

@@ -8,10 +8,43 @@
       <% end %>
     </p>
 
+    <p>
+      <%= f.label :description %>
+      <%= f.text_area :description %>
+      <% if risk.errors[:description].length %>
+          <span class="risk-error"><%= risk.errors[:description].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label :status %>
+      <%= f.check_box :status %> <br />
+      <% if risk.errors[:status].length %>
+          <span class="risk-error"><%= risk.errors[:status].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label :probability %>
+      <%= f.text_field :probability %>
+      <% if risk.errors[:probability].length %>
+          <span class="risk-error"><%= risk.errors[:probability].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label :impact %>
+      <%= f.text_field :impact %>
+      <% if risk.errors[:impact].length %>
+          <span class="risk-error"><%= risk.errors[:impact].join(', ') %></span>
+      <% end %>
+    </p>
+
     <div class="widget-box--blocks--buttons">
-        <button type="submit" class="button -alt-highlight" title="New risk">
-            <span class="button--text">Create risk</span>
+        <button type="submit" class="button -alt-highlight" title="Guardar">
+            <span class="button--text">Guardar</span>
         </button>
     </div>
 
 <% end %>
+

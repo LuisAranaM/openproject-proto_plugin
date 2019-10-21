@@ -1,0 +1,2 @@
+class Probability < ApplicationRecord
+end

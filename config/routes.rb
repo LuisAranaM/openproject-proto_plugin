@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  #get 'rules/index'
   resources :kittens
 
 
@@ -10,5 +11,17 @@ Rails.application.routes.draw do
   #  end
   #end
 
-  resources :risks
+
+  scope 'projects/:project_id' do
+    resources :risks#, only: [:new, :create, :index]
+  end
+
+  scope 'projects/:project_id' do
+    resources :risk_rules#, only: [:new, :create, :index]
+  end
+  #resources :risks
+  
 end
+
+
+

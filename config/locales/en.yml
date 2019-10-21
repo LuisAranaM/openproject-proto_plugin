@@ -6,8 +6,20 @@ en:
   label_kitten_edit: Edit Kitten
   label_kitten_delete: Delete Kitten
   
-  label_risk: Risk
-  label_risks: Risks
-  label_risk_new: New Risk
-  label_risk_edit: Edit Risk
-  label_risk_delete: Delete Risk
+  label_risk: Riesgos
+  label_risks: Registro de Riesgos
+  label_risk_new: Nuevo Riesgo
+  label_risk_edit: Editar Riesgo
+  label_risk_delete: Eliminar riesgo
+  button_add_risk: Nuevo Riesgo
+
+  label_risk_rule: Reglas
+  label_risk_rules: Gestión de Reglas
+  label_risk_rule_new: Nueva Regla
+  label_risk_rule_edit: Configurar Regla
+  label_risk_rule_delete: Eliminar Regla
+  button_add_risk_rule: Nueva Regla
+
+  notifications: Notificaciones
+  suggested_actions: Acciones Recomendadas
+  parameter_configuration: Configuración de Parámetros

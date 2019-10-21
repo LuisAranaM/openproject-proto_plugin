@@ -1,0 +1,53 @@
+<%= form_for(risk_rule) do |f| %>
+
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <% if risk_rule.errors[:name].length %>
+          <span class="risk_rule-error"><%= risk_rule.errors[:name].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label :description %>
+      <%= f.text_area :description %>
+      <% if risk_rule.errors[:description].length %>
+          <span class="risk_rule-error"><%= risk_rule.errors[:description].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label :suggested_actions %>
+      <%= f.text_area :suggested_actions %>
+      <% if risk_rule.errors[:suggested_actions].length %>
+          <span class="risk_rule-error"><%= risk_rule.errors[:suggested_actions].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label :status %>
+      <%= f.check_box :status %> <br />
+      <% if risk_rule.errors[:status].length %>
+          <span class="risk_rule-error"><%= risk_rule.errors[:status].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+    <%= f.label :notifications %>
+    <%= f.check_box :notifications %> <br />
+    <% if risk_rule.errors[:notifications].length %>
+        <span class="risk_rule-error"><%= risk_rule.errors[:notifications].join(', ') %></span>
+    <% end %>
+  </p>
+
+
+
+  
+    <div class="widget-box--blocks--buttons">
+        <button type="submit" class="button -alt-highlight" title="Guardar">
+            <span class="button--text">Guardar</span>
+        </button>
+    </div>
+
+<% end %>
+

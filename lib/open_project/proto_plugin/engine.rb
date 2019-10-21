@@ -44,10 +44,12 @@ module OpenProject::ProtoPlugin
                { controller: '/risks', action: 'index' },
                after: :overview,
                param: :project_id,
-               caption: "Risks",
+               caption: "Riesgos",
                icon: 'icon2 icon-bug',
                html: { id: "risks-menu-item" },
                if: ->(project) { true }
+
+    
     end
 
     initializer 'proto_plugin.register_hooks' do

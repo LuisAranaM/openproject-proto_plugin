@@ -1,20 +1,69 @@
-<% html_title t(:label_risks) %>
+<% html_title t(:label_risks) -%>
 
-<h1><%= t(:label_risks) %></h1>
+<% any_risks= @risks.any? %>
 
-<p>
-  These are the risks from the <%= t(:project_id)%> module:
-</p>
+<%= toolbar title: t(:label_risks) do %>
 
-<ul ng-controller="risksController as risks">
-  <% @risks.each do |risk| %>
-    <li ng-click="showMessage()"><%= risk.name %></li>
+  <li class="toolbar-item">
+  <%= link_to risk_rules_path(),
+      { class: 'button',
+        id: 'new_news_link',
+        aria: {label: t(:label_risk_rules)},
+        title: t(:label_risk_rules)} do %>
+    <span class="button--text"><%= t(:label_risk_rules) %></span>
   <% end %>
-</ul>
+</li>
+
+  <li class="toolbar-item">
+    <%= link_to new_risk_path(),
+        { class: 'button -alt-highlight',
+          id: 'new_news_link',
+          aria: {label: t(:button_add_risk)},
+          title: t(:button_add_risk)} do %>
+      <%= op_icon('button--icon icon-add') %>
+      <span class="button--text"><%= t(:button_add_risk) %></span>
+    <% end %>
+  </li>
 
 
-<%= link_to 'Call Action', { :controller => "risks", :action => "new"}, method: :get %>
+  <% if any_risks %>
+    <li class="toolbar-item">
+      <button id="filter-member-button"
+              focus
+              title="<%= I18n.t(:description_filter) %>"
+              class="toggle-member-filter-link button">
+        <%= op_icon('button--icon icon-filter') %>
+      </button>
+    </li>
+  <% end %>
+<% end %>
 
 
-<%= render "shared/kitty_image" %>
+
+<%= error_messages_for 'risk' %>
+
+
+
+<div>
+  <% if any_risks %>
+  <% @risks.each do |risk| %>
+
+
+    <li class="toolbar-item">
+    <%= link_to risks_path(),
+        { class: 'button',
+          id: 'new_news_link',
+          aria: {label: t(risk.name)},
+          title: t(risk.name)} do %>
+      <span class="button--text"><%= t(risk.name) %></span>
+    <% end %>:<%= risk.description%></li>
+ 
+  <% end %>
+  <% elsif @is_filtered %>
+    <%= no_results_box custom_title: t(:notice_no_principals_found) %>
+  <% else %>
+    <%= no_results_box %>
+  <% end %>
+</div>
+
 
