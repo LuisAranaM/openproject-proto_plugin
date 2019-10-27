@@ -25,45 +25,15 @@
     <% end %>
   </li>
 
-
-  <% if any_risks %>
-    <li class="toolbar-item">
-      <button id="filter-member-button"
-              focus
-              title="<%= I18n.t(:description_filter) %>"
-              class="toggle-member-filter-link button">
-        <%= op_icon('button--icon icon-filter') %>
-      </button>
-    </li>
-  <% end %>
 <% end %>
 
 
 
 <%= error_messages_for 'risk' %>
 
-
-
-<div>
-  <% if any_risks %>
-  <% @risks.each do |risk| %>
-
-
-    <li class="toolbar-item">
-    <%= link_to risks_path(),
-        { class: 'button',
-          id: 'new_news_link',
-          aria: {label: t(risk.name)},
-          title: t(risk.name)} do %>
-      <span class="button--text"><%= t(risk.name) %></span>
-    <% end %>:<%= risk.description%></li>
- 
-  <% end %>
-  <% elsif @is_filtered %>
-    <%= no_results_box custom_title: t(:notice_no_principals_found) %>
-  <% else %>
-    <%= no_results_box %>
-  <% end %>
-</div>
-
-
+<% if @risks.empty? %>
+  <%= no_results_box %>
+<% else %>
+<%= render :partial => 'list', :locals => {:risks => @risks} %>
+<%= pagination_links_full @risks %>
+<% end %>

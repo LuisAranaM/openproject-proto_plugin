@@ -1,0 +1,84 @@
+
+<%= form_tag({}) do -%>
+
+<div class="generic-table--container">
+  <div class="generic-table--results-container">
+    <table class="generic-table" id="material_budget_items">
+      <colgroup>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+      </colgroup>
+      <thead>
+        <tr>
+          <%= sort_header_tag("name", :caption => 'Nombre del Riesgo') %>
+          <%= sort_header_tag("name", :caption => 'Tarea relacionada') %>
+          <%= sort_header_tag("name", :caption => 'Encargado') %>
+          <%= sort_header_tag("name", :caption => 'Severidad') %>
+          <%= sort_header_tag("name", :caption => 'Plan de Acción') %>
+          <%= sort_header_tag("name", :caption => 'Estado') %>
+          <%= sort_header_tag("name", :caption => 'Generado por') %>
+          <%= sort_header_tag("name", :caption => 'Creado en') %>  
+          <th class="currency">
+            <div class="generic-table--sort-header-outer">
+              <div class="generic-table--sort-header">
+                <span>
+                  <%= 'Editar'%>
+                </span>
+              </div>
+            </div>
+          </th> 
+          <th class="currency">
+            <div class="generic-table--sort-header-outer">
+              <div class="generic-table--sort-header">
+                <span>
+                  <%= 'Eliminar'%>
+                </span>
+              </div>
+            </div>
+          </th>   
+          
+        </tr>
+      </thead>
+      <tbody>
+        <% risks.each do |risk| %>
+        <tr id="risk-<%= risk.id %>" >
+          <td><%= risk.name %></td>
+          <td><%= risk.name %></td>
+          <td><%= risk.name %></td>
+          <td><%= risk.name %></td>
+          <td><%= risk.name %></td>
+          <td><%= risk.name %></td>
+          <td><%= risk.name %></td>
+          <td><%= risk.name %></td>
+          <td>
+          <%= link_to({controller: '/risks', action: 'edit', id: risk}) do %>
+            <%= op_icon('button--icon icon-edit') %> 
+          <% end %>
+          </td>
+          <td>
+          <%= link_to({controller: '/risks', action: 'destroy', id: risk},
+                      class: '',
+                      method: :delete,
+                      confirm: l(:text_are_you_sure)) do %>
+            <%= op_icon('button--icon icon-delete') %> 
+          <% end %>
+
+        </td>
+        </tr>
+        <% end %>
+        
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<% end -%>
