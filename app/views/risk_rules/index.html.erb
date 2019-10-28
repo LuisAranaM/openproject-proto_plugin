@@ -14,16 +14,6 @@
   <% end %>
 </li>
 
-  <% if any_risk_rules %>
-    <li class="toolbar-item">
-      <button id="filter-member-button"
-              focus
-              title="<%= I18n.t(:description_filter) %>"
-              class="toggle-member-filter-link button">
-        <%= op_icon('button--icon icon-filter') %>
-      </button>
-    </li>
-  <% end %>
 <% end %>
 
 <%= error_messages_for 'risk_rule' %>

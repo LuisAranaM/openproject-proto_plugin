@@ -58,7 +58,9 @@
             <% end %>
           </td>
           <td>
+          <%= link_to({controller: '/risk_rules', action: 'edit', id: risk_rule}) do %>
             <%= op_icon('button--icon icon-edit') %> 
+          <% end %> 
           </td>
         </tr>
         <% end %>

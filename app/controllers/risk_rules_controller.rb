@@ -2,6 +2,7 @@ class RiskRulesController < ApplicationController
   model_object RiskRule
   # this is necessary if you want the project menu in the sidebar for your view
   before_action :find_project, only: [:index, :new, :create]
+  before_action :find_risk_rule, except: [:index, :new, :create]
   before_action :authorize, except: [:index]
 
   helper :sort
@@ -21,13 +22,11 @@ class RiskRulesController < ApplicationController
   end
 
   def show
-    @risk_rule=RiskRule.find(params[:id])
+    #@risk_rule=RiskRule.find(params[:id])
   end
 
   def edit
-    @risk_rule=RiskRule.left_outer_joins(:project_rules).distinct
-              .select('risk_rules.*,project_rules.id,project_rules.project_id,project_rules.notifications AS notifications, project_rules.status AS status')
-              .where("project_rules.id=?",params[:id]).first
+    
   end
 
   def new
@@ -40,14 +39,13 @@ class RiskRulesController < ApplicationController
 
   def update
     # TODO
-    @risk_rule=RiskRule.find(params[:id])
+    @project_rule=ProjectRule.find(params[:id])
     
-    if @risk_rule.update(risk_rule_params)
-      # notify_changed_risks(:created, @risk_rule)
-      flash[:notice] = 'Updated risk'
-      redirect_to @risk_rule
+    if @project_rule.update(risk_rule_params)
+      flash[:notice] = 'Se configuró la regla'
+      redirect_to action: 'index', project_id: @project
     else
-      flash[:error] = 'Cannot update new risk'
+      flash[:error] = 'No se pudo configurar la regla'
       render action: 'edit'
     end
   end
@@ -83,7 +81,7 @@ class RiskRulesController < ApplicationController
   private
 
   def risk_rule_params
-    #params.require(:risk).permit(:name,:description,:status,:impact,:probability)
+    params.require(:risk_rule).permit(:status, :notifications)
   end
 
   private
@@ -94,6 +92,22 @@ class RiskRulesController < ApplicationController
     #@risk_rule = Risk.new
     #@meeting.project = @project
     #@meeting.author = User.current
+  end
+
+  def find_risk_rule
+    @risk_rule = RiskRule.left_outer_joins(:project_rules).distinct
+              .select('risk_rules.*,project_rules.id,project_rules.project_id,project_rules.notifications AS notifications, project_rules.status AS status')
+              .where("project_rules.id=?",params[:id]).first
+
+    @project_rule = ProjectRule.left_outer_joins(:risk_rule).distinct
+    .select('risk_rules.name,risk_rules.description,risk_rules.suggested_actions, risk_rules.id as risk_rule_id,project_rules.*')
+    .where("project_rules.id=?",params[:id]).first
+    
+    @risk_rule_parameters=MasterRuleParameter.where('risk_rule_id=?',@risk_rule.id)
+    @project = @project_rule.project
+    
+  rescue ActiveRecord::RecordNotFound
+    render_404
   end
 
 end

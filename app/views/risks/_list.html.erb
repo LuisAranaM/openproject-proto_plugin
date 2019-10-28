@@ -74,9 +74,9 @@
 
           <td><%= risk.created_at.to_formatted_s(:short)    %></td>
           <td>
-          <%= link_to({controller: '/risks', action: 'edit', id: risk}) do %>
-            <%= op_icon('button--icon icon-edit') %> 
-          <% end %>
+            <%= link_to({controller: '/risks', action: 'edit', id: risk}) do %>
+              <%= op_icon('button--icon icon-edit') %> 
+            <% end %>
           </td>
           <td>
           <%= link_to({controller: '/risks', action: 'destroy', id: risk},

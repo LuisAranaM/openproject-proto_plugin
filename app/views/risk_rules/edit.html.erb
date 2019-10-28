@@ -1,5 +1,7 @@
-<% html_title t(:label_risk_rule_edit) %>
+<% html_title t(:label_risk_rule_edit) -%>
 
-<h1><%= t(:label_risk_rule_edit) %></h1>
+<%= toolbar title: t(:label_risk_rule_edit) do %>
+
+<% end %>
 
 <%= render "form", risk_rule: @risk_rule %>

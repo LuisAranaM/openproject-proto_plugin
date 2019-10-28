@@ -140,8 +140,7 @@ class RisksController < ApplicationController
     @project = Project.find(params[:project_id])
   end
 
-  def load_combos
-   
+  def load_combos   
     @probabilities=["0-25%","25-50%","50-75%","75-100%"]
     @impacts=["Menor","Moderado","Mayor","Crítico"]
   end

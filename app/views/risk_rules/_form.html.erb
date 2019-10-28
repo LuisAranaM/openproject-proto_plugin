@@ -1,31 +1,31 @@
 <%= form_for(risk_rule) do |f| %>
 
     <p>
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+      <%= f.label 'Identificador' %>
+      <%= f.text_field :name, disabled: true %>
       <% if risk_rule.errors[:name].length %>
           <span class="risk_rule-error"><%= risk_rule.errors[:name].join(', ') %></span>
       <% end %>
     </p>
 
     <p>
-      <%= f.label :description %>
-      <%= f.text_area :description %>
+      <%= f.label 'Regla' %>
+      <%= f.text_field :description, disabled: true %>
       <% if risk_rule.errors[:description].length %>
           <span class="risk_rule-error"><%= risk_rule.errors[:description].join(', ') %></span>
       <% end %>
     </p>
 
     <p>
-      <%= f.label :suggested_actions %>
-      <%= f.text_area :suggested_actions %>
+      <%= f.label 'Acciones recomendadas' %>
+      <%= f.text_area :suggested_actions, rows: "7",disabled: true %>
       <% if risk_rule.errors[:suggested_actions].length %>
           <span class="risk_rule-error"><%= risk_rule.errors[:suggested_actions].join(', ') %></span>
       <% end %>
     </p>
 
     <p>
-      <%= f.label :status %>
+      <%= f.label 'Estado' %>
       <%= f.check_box :status %> <br />
       <% if risk_rule.errors[:status].length %>
           <span class="risk_rule-error"><%= risk_rule.errors[:status].join(', ') %></span>
@@ -33,13 +33,21 @@
     </p>
 
     <p>
-    <%= f.label :notifications %>
+    <%= f.label 'Notificaciones' %>
     <%= f.check_box :notifications %> <br />
     <% if risk_rule.errors[:notifications].length %>
         <span class="risk_rule-error"><%= risk_rule.errors[:notifications].join(', ') %></span>
     <% end %>
   </p>
 
+
+  <% @risk_rule_parameters.each do |parameter| %>
+    <p>
+      <%= f.label parameter.name %>
+      <%= f.text_field :name %> <br />
+      
+    </p>
+  <% end %>
 
 
   
