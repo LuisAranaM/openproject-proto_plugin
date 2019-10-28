@@ -1,0 +1,72 @@
+<%= form_tag({}) do -%>
+
+<div class="generic-table--container">
+  <div class="generic-table--results-container">
+    <table class="generic-table" id="material_budget_items">
+      <colgroup>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+      </colgroup>
+      <thead>
+        <tr>
+
+          <%= sort_header_tag("name", :caption => 'Identificador') %>
+          <th class="currency">
+          <div class="generic-table--sort-header-outer">
+            <div class="generic-table--sort-header">
+              <span>
+                <%= 'Regla'%>
+              </span>
+            </div>
+          </div>
+        </th> 
+          <%= sort_header_tag("status", :caption => 'Estado') %>
+          <%= sort_header_tag("notifications", :caption => 'Notificaciones') %>
+          <th class="currency">
+            <div class="generic-table--sort-header-outer">
+              <div class="generic-table--sort-header">
+                <span>
+                  <%= 'Editar'%>
+                </span>
+              </div>
+            </div>
+          </th> 
+            
+          
+        </tr>
+      </thead>
+      <tbody>
+        <% risk_rules.each do |risk_rule| %>
+        <tr id="risk-rule-<%= risk_rule.id %>" >
+          <td><%= risk_rule.name %></td>
+          <td><%= risk_rule.description %></td>
+          <td>
+            <% if risk_rule.status %>
+              <%= 'Activa' %>
+            <% else %>
+              <%= 'Inactiva' %>
+            <% end %>
+          </td>
+          <td>
+            <% if risk_rule.notifications %>
+              <%= 'Activas' %>
+            <% else %>
+              <%= 'Inactivas' %>
+            <% end %>
+          </td>
+          <td>
+            <%= op_icon('button--icon icon-edit') %> 
+          </td>
+        </tr>
+        <% end %>
+        
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<% end -%>

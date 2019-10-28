@@ -12,6 +12,7 @@ en:
   label_risk_edit: Editar Riesgo
   label_risk_delete: Eliminar riesgo
   button_add_risk: Nuevo Riesgo
+  delete_risk_message: ¿Estás seguro que deseas eliminar el riesgo?
 
   label_risk_rule: Reglas
   label_risk_rules: Gestión de Reglas

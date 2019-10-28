@@ -1,8 +1,20 @@
 class RiskRulesController < ApplicationController
   model_object RiskRule
   # this is necessary if you want the project menu in the sidebar for your view
-  before_action :find_project#, only: [:index, :new, :create]
+  before_action :find_project, only: [:index, :new, :create]
   before_action :authorize, except: [:index]
+
+  helper :sort
+  include SortHelper
+
+  helper :watchers
+  include WatchersHelper
+  include PaginationHelper
+
+  include Pagination::Controller
+  paginate_model User
+  search_for User, :search_in_project
+  search_options_for User, lambda { |*| { project: @project } }
 
   def index
    set_index_data!
@@ -47,19 +59,24 @@ class RiskRulesController < ApplicationController
   
   
   def set_index_data!
-    
-    @risk_rules = index_risk_rules
+    sort_columns = { 
+      'name' => "#{RiskRule.table_name}.name",
+      'status' => "#{ProjectRule.table_name}.status",
+      'notifications' => "#{ProjectRule.table_name}.notifications",
+      'created_at' => "#{RiskRule.table_name}.created_at"
+    }
 
-  end
+    sort_init 'id', 'asc'
+    sort_update sort_columns
 
-  def index_risk_rules
-
+    per_page_param=10
 
     @risk_rules = RiskRule.left_outer_joins(:project_rules).distinct
                   .select('risk_rules.*,project_rules.project_id,project_rules.notifications AS notifications, project_rules.status AS status')
                   .where("project_rules.project_id=?",@project.id)
-                  .order("risk_rules.id ASC")
-    
+                  .order(sort_clause)    
+                  .page(page_param)
+                  .per_page(per_page_param) 
 
   end
 

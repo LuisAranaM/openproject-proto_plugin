@@ -26,28 +26,11 @@
   <% end %>
 <% end %>
 
+<%= error_messages_for 'risk_rule' %>
 
-
-
-
-<div>
-  <% if any_risk_rules %>
-  <% @risk_rules.each do |risk_rule| %>
-
-    <li> <%= link_to risks_path(),
-      { class: 'button',
-        id: 'new_news_link',
-        aria: {label: t(risk_rule.name)},
-        title: t(risk_rule.name)} do %>
-    <span class="button--text"><%= t(risk_rule.name) %></span>
-  <% end %>:<%= risk_rule.description%></li>
-    
-  <% end %>
-  <% elsif @is_filtered %>
-    <%= no_results_box custom_title: t(:notice_no_principals_found) %>
-  <% else %>
-    <%= no_results_box %>
-  <% end %>
-</div>
-
-
+<% if @risk_rules.empty? %>
+  <%= no_results_box %>
+<% else %>
+<%= render :partial => 'list', :locals => {:risk_rules => @risk_rules} %>
+<%= pagination_links_full @risk_rules %>
+<% end %>

@@ -9,6 +9,20 @@
     </p>
 
     <p>
+    <%= f.label 'Encargado' %>
+    <%= f.select :incharge_id,
+    @project.possible_assignees.sort.map{|u| [u.name, u.id]},
+    { prompt: true },
+    {
+      class: 'form--select budget-item-value',
+      data: { :'request-key' => 'incharge_id' }
+    } %>
+    <% if risk.errors[:incharge_id].length %>
+    <span class="risk-error"><%= risk.errors[:incharge_id].join(', ') %></span>
+<% end %>
+</p>
+
+    <p>
       <%= f.label :description %>
       <%= f.text_area :description %>
       <% if risk.errors[:description].length %>
@@ -24,22 +38,79 @@
       <% end %>
     </p>
 
-    <p>
-      <%= f.label :probability %>
-      <%= f.text_field :probability %>
-      <% if risk.errors[:probability].length %>
-          <span class="risk-error"><%= risk.errors[:probability].join(', ') %></span>
-      <% end %>
-    </p>
-
+  
     <p>
       <%= f.label :impact %>
-      <%= f.text_field :impact %>
+      <%= f.select :impact,
+      @impacts.sort.map{|string| string},
+      { prompt: true },
+      {
+        class: 'form--select budget-item-value',
+        data: { :'request-key' => 'impact' }
+      } %>
       <% if risk.errors[:impact].length %>
           <span class="risk-error"><%= risk.errors[:impact].join(', ') %></span>
       <% end %>
     </p>
 
+    <p>
+      <%= f.label :probability %>
+      <%= f.select :probability,
+      @probabilities.sort.map{|string| string},
+      { prompt: true },
+      {
+        class: 'form--select budget-item-value',
+        data: { :'request-key' => 'probability' }
+      } %>
+      <% if risk.errors[:probability].length %>
+          <span class="risk-error"><%= risk.errors[:probability].join(', ') %></span>
+      <% end %>
+    </p>
+
+
+    <p>
+      <%= f.label :action_plan_name %>
+      <%= f.text_field :action_plan_name %>
+      <% if risk.errors[:action_plan_name].length %>
+          <span class="risk-error"><%= risk.errors[:action_plan_name].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label :action_plan_description %>
+      <%= f.text_area :action_plan_description %>
+      <% if risk.errors[:action_plan_description].length %>
+          <span class="risk-error"><%= risk.errors[:action_plan_description].join(', ') %></span>
+      <% end %>
+    </p> 
+      
+    
+
+
+
+    <p>
+      <%= f.label :first_date %>
+      <%= f.text_field :first_date,
+            class: '-augmented-datepicker'%>
+      <% if risk.errors[:first_date].length %>
+          <span class="risk-error"><%= risk.errors[:first_date].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label :last_date %>
+      <%= f.text_field :last_date,
+        class: '-augmented-datepicker' %>
+      <% if risk.errors[:last_date].length %>
+          <span class="risk-error"><%= risk.errors[:last_date].join(', ') %></span>
+      <% end %>
+    </p>
+
+
+
+    
+
+    
     <div class="widget-box--blocks--buttons">
         <button type="submit" class="button -alt-highlight" title="Guardar">
             <span class="button--text">Guardar</span>

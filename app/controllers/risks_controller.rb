@@ -4,6 +4,8 @@ class RisksController < ApplicationController
   around_action :set_time_zone
   before_action :find_project, only: [:index, :new, :create]
   before_action :find_risk, except: [:index, :new, :create]
+  before_action :load_combos, only: [:new, :edit]
+
   before_action :authorize, except: [:index]
 
 
@@ -36,11 +38,13 @@ class RisksController < ApplicationController
 
   def new
     @risk=Risk.new
+
   end
 
   def create
     # TODO
     @risk = Risk.new(risk_params)
+    @risk.automatic=false
     @risk.project=@project
     if @risk.save
       # notify_changed_risks(:created, @risk)
@@ -80,56 +84,40 @@ class RisksController < ApplicationController
     
   end
 
-  def risks_table_options()
-    {
-      project: @project
-    }
-  end
-
-  def risks_filter_options()
-    
-    {
-      project: @project
-    }
-  end
-
+  
   
   
   def set_index_data!
     
-    #@is_filtered = false#Risks::UserFilterCell.filtered? params
-    #@risks = index_risks
-    #@risks_table_options = risks_table_options 
-    #@risks_filter_options = risks_filter_options 
-
     sort_columns = { 'id' => "#{Risk.table_name}.id",
-                    'name' => "#{Risk.table_name}.name"
+                    'name' => "#{Risk.table_name}.name",
+                    'impact' => "#{Risk.table_name}.impact",
+                    'status' => "#{Risk.table_name}.status",                    
+                    'created_at' => "#{Risk.table_name}.created_at",
+                    'incharge_id' => "#{Risk.table_name}.incharge_id",
+                    'action_plan_name' => "#{Risk.table_name}.action_plan_name",
+                    'automatic' => "#{Risk.table_name}.automatic"
     }
 
     sort_init 'id', 'desc'
     sort_update sort_columns
 
-    @risks = Risk.where(project_id:@project.id)
-    .order(sort_clause)    
-    .page(page_param)
-    .per_page(per_page_param)
-  end
-
-  def index_risks
-    #filters = params.slice(:name)
-    #filters[:project_id] = @project.id.to_s
-
-    @risks = Risk.where(project_id:@project.id)
-               #.where(id: Members::UserFilterCell.filter(filters))
-               #.includes(:names)
+    @risks = Risk.joins("LEFT JOIN users ON users.id = risks.incharge_id")    
+            .select("risks.*, CONCAT(users.firstname,' ',users.lastname) as incharge_name")
+            .where(project_id:@project.id)
+            .order(sort_clause)    
+            .page(page_param)
+            .per_page(per_page_param)
+    
   end
 
 
   private
 
   def risk_params
-    params.require(:risk).permit(:name,:description,:status,:impact,:probability)
-    # params.require(:risk).permit(:name, :project_id)
+    params.require(:risk).permit(:name,:description,:status,:impact,:probability,
+    :action_plan_name,:action_plan_description,:first_date,:last_date,:incharge_id)
+   
   end
 
   private
@@ -150,9 +138,12 @@ class RisksController < ApplicationController
 
   def find_project
     @project = Project.find(params[:project_id])
-    #@risk = Risk.new(risk_params)
-    #@risk.project = @project
-    #@meeting.author = User.current
+  end
+
+  def load_combos
+   
+    @probabilities=["0-25%","25-50%","50-75%","75-100%"]
+    @impacts=["Menor","Moderado","Mayor","Crítico"]
   end
 
   def find_risk
@@ -162,7 +153,4 @@ class RisksController < ApplicationController
     render_404
   end
 
-  # def notify_changed_risks(action, changed_risk)
-  #   OpenProject::Notifications.send(:risks_changed, action: action, risk: changed_risk)
-  # end
 end
