@@ -1,0 +1,26 @@
+<% html_title t(:label_risk_rules) -%>
+
+<% any_project_rules= @project_rules.any? %>
+
+<%= toolbar title: t(:label_risk_rules) do %>
+
+  <li class="toolbar-item">
+  <%= link_to risks_path(),
+      { class: 'button',
+        id: 'new_news_link',
+        aria: {label: t(:label_risks)},
+        title: t(:label_risks)} do %>
+    <span class="button--text"><%= t(:label_risks) %></span>
+  <% end %>
+</li>
+
+<% end %>
+
+<%= error_messages_for 'project_rule' %>
+
+<% if @project_rules.empty? %>
+  <%= no_results_box %>
+<% else %>
+  <%= render :partial => 'list', :locals => {:project_rules => @project_rules} %>
+  <%= pagination_links_full @project_rules %>
+<% end %>

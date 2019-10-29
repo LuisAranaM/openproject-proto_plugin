@@ -1,0 +1,74 @@
+<%= form_tag({}) do -%>
+
+<div class="generic-table--container">
+  <div class="generic-table--results-container">
+    <table class="generic-table" id="material_budget_items">
+      <colgroup>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+        <col highlight-col>
+      </colgroup>
+      <thead>
+        <tr>
+
+          <%= sort_header_tag("name", :caption => 'Identificador') %>
+          <th class="currency">
+          <div class="generic-table--sort-header-outer">
+            <div class="generic-table--sort-header">
+              <span>
+                <%= 'Regla'%>
+              </span>
+            </div>
+          </div>
+        </th> 
+          <%= sort_header_tag("status", :caption => 'Estado') %>
+          <%= sort_header_tag("notifications", :caption => 'Notificaciones') %>
+          <th class="currency">
+            <div class="generic-table--sort-header-outer">
+              <div class="generic-table--sort-header">
+                <span>
+                  <%= 'Configurar'%>
+                </span>
+              </div>
+            </div>
+          </th> 
+            
+          
+        </tr>
+      </thead>
+      <tbody>
+        <% project_rules.each do |project_rule| %>
+        <tr id="project-rule-<%= project_rule.id %>" >
+          <td><%= project_rule.name %></td>
+          <td><%= project_rule.description %></td>
+          <td>
+            <% if project_rule.status %>
+              <%= 'Activa' %>
+            <% else %>
+              <%= 'Inactiva' %>
+            <% end %>
+          </td>
+          <td>
+            <% if project_rule.notifications %>
+              <%= 'Activas' %>
+            <% else %>
+              <%= 'Inactivas' %>
+            <% end %>
+          </td>
+          <td>
+          <%= link_to({controller: '/project_rules', action: 'edit', id: project_rule}) do %>
+            <%= op_icon('icon2 icon-settings2') %> 
+          <% end %> 
+          </td>
+        </tr>
+        <% end %>
+        
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<% end -%>

@@ -19,6 +19,10 @@ Rails.application.routes.draw do
   scope 'projects/:project_id' do
     resources :risk_rules#, only: [:new, :create, :index]
   end
+
+  scope 'projects/:project_id' do
+    resources :project_rules#, only: [:new, :create, :index]
+  end
   #resources :risks
   
 end

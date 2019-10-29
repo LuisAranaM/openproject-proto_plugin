@@ -1,5 +1,5 @@
-class RiskRulesController < ApplicationController
-  model_object RiskRule
+class ProjectRulesController < ApplicationController
+  model_object ProjectRule
   # this is necessary if you want the project menu in the sidebar for your view
   before_action :find_project, only: [:index, :new, :create]
   before_action :find_risk_rule, except: [:index, :new, :create]
@@ -22,11 +22,11 @@ class RiskRulesController < ApplicationController
   end
 
   def show
-    #@risk_rule=RiskRule.find(params[:id])
+
   end
 
   def edit
-    
+
   end
 
   def new
@@ -41,7 +41,7 @@ class RiskRulesController < ApplicationController
     # TODO
     @project_rule=ProjectRule.find(params[:id])
     
-    if @project_rule.update(risk_rule_params)
+    if @project_rule.update(project_rule_params)
       flash[:notice] = 'Se configuró la regla'
       redirect_to action: 'index', project_id: @project
     else
@@ -64,12 +64,13 @@ class RiskRulesController < ApplicationController
       'created_at' => "#{RiskRule.table_name}.created_at"
     }
 
-    sort_init 'id', 'asc'
+    sort_init 'name', 'asc'
     sort_update sort_columns
 
     per_page_param=10
 
-    @risk_rules = RiskRule.left_outer_joins(:project_rules).distinct
+    @project_rules = ProjectRule
+                .joins("RIGHT JOIN risk_rules ON risk_rules.id = project_rules.risk_rule_id")
                   .select('risk_rules.*,project_rules.project_id,project_rules.notifications AS notifications, project_rules.status AS status')
                   .where("project_rules.project_id=?",@project.id)
                   .order(sort_clause)    
@@ -80,8 +81,8 @@ class RiskRulesController < ApplicationController
 
   private
 
-  def risk_rule_params
-    params.require(:risk_rule).permit(:status, :notifications)
+  def project_rule_params
+    params.require(:project_rule).permit(:status, :notifications,:param_1,:param_2,:param_3,:param_4,:param_5)
   end
 
   private
@@ -89,9 +90,6 @@ class RiskRulesController < ApplicationController
 
   def find_project
     @project = Project.find(params[:project_id])
-    #@risk_rule = Risk.new
-    #@meeting.project = @project
-    #@meeting.author = User.current
   end
 
   def find_risk_rule
@@ -101,15 +99,10 @@ class RiskRulesController < ApplicationController
 
               
     @project_rule = ProjectRule.left_outer_joins(:risk_rule).distinct
-    .select('risk_rules.name,risk_rules.description,risk_rules.suggested_actions, risk_rules.id as risk_rule_id,project_rules.*')
+    .select('risk_rules.name,risk_rules.description,risk_rules.suggested_actions, risk_rules.id as risk_rule_id,
+    risk_rules.param_1 as name_1,risk_rules.param_2 as name_2,risk_rules.param_3 as name_3,risk_rules.param_4 as name_4,risk_rules.param_5 as name_5,
+    project_rules.*')
     .where("project_rules.id=?",params[:id]).first
-    
-    @risk_rule_parameters=RiskRuleParameter#.left_outer_joins(:risk_rule_parameters).distinct
-    .joins("RIGHT JOIN master_rule_parameters ON risk_rule_parameters.master_rule_parameters_id = master_rule_parameters.id")
-    .select('risk_rule_parameters.value,master_rule_parameters.*')
-    .where('risk_rule_id=?',@risk_rule.id)
-    
-    @project_rule.risk_rule_parameters=@risk_rule_parameters
     
     @project = @project_rule.project
     

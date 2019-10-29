@@ -1,0 +1,109 @@
+<%= form_for(project_rule) do |f| %>
+
+    <p>
+      <%= f.label 'Identificador' %>
+      <%= f.text_field :name, disabled: true %>
+      <% if project_rule.errors[:name].length %>
+          <span class="project_rule-error"><%= project_rule.errors[:name].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label 'Regla' %>
+      <%= f.text_field :description, disabled: true %>
+      <% if project_rule.errors[:description].length %>
+          <span class="project_rule-error"><%= project_rule.errors[:description].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label 'Acciones recomendadas' %>
+      <%= f.text_area :suggested_actions, rows: "7",disabled: true %>
+      <% if project_rule.errors[:suggested_actions].length %>
+          <span class="project_rule-error"><%= project_rule.errors[:suggested_actions].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label 'Estado' %>
+      <%= f.check_box :status %> <br />
+      <% if project_rule.errors[:status].length %>
+          <span class="project_rule-error"><%= project_rule.errors[:status].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <p>
+      <%= f.label 'Notificaciones' %>
+      <%= f.check_box :notifications %> <br />
+      <% if project_rule.errors[:notifications].length %>
+          <span class="project_rule-error"><%= project_rule.errors[:notifications].join(', ') %></span>
+      <% end %>
+    </p>
+
+    
+    <% if @project_rule.name_1 %>
+      <p>
+        <%= f.label @project_rule.name_1 %>
+
+        <% if @project_rule.risk_rule_id!=3 %>
+          <%= f.text_field :param_1 %>
+        <% else %>
+          <%= f.check_box :param_1 %> <br />
+        <% end %>
+
+        <% if project_rule.errors[:param_1].length %>
+            <span class="project_rule-error"><%= project_rule.errors[:param_1].join(', ') %></span>
+        <% end %>
+    <% end %>
+
+    <% if @project_rule.name_2 %>
+      <p>
+        <%= f.label @project_rule.name_2 %>
+        <% if @project_rule.risk_rule_id!=1 %>
+          <%= f.text_field :param_2 %>
+        <% else %>
+          <%= f.check_box :param_2 %> <br />
+        <% end %>
+        <% if project_rule.errors[:param_2].length %>
+            <span class="project_rule-error"><%= project_rule.errors[:param_2].join(', ') %></span>
+        <% end %>
+    <% end %>
+
+    <% if @project_rule.name_3 %>
+      <p>
+        <%= f.label @project_rule.name_3 %>
+        <%= f.text_field :param_3 %>
+        <% if project_rule.errors[:param_3].length %>
+            <span class="project_rule-error"><%= project_rule.errors[:param_3].join(', ') %></span>
+        <% end %>
+    <% end %>
+
+    <% if @project_rule.name_4 %>
+      <p>
+        <%= f.label @project_rule.name_4 %>
+        <%= f.text_field :param_4 %>
+        <% if project_rule.errors[:param_4].length %>
+            <span class="project_rule-error"><%= project_rule.errors[:param_4].join(', ') %></span>
+        <% end %>
+    <% end %>
+
+    <% if @project_rule.name_5 %>
+      <p>
+        <%= f.label @project_rule.name_5 %>
+        <%= f.text_field :param_5 %>
+        <% if project_rule.errors[:param_5].length %>
+            <span class="project_rule-error"><%= project_rule.errors[:param_5].join(', ') %></span>
+        <% end %>
+    <% end %>
+   
+  
+
+  
+    <div class="widget-box--blocks--buttons">
+        <button type="submit" class="button -alt-highlight" title="Guardar">
+            <span class="button--text">Guardar</span>
+        </button>
+    </div>
+
+<% end %>
+
