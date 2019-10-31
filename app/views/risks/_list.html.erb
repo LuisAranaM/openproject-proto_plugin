@@ -15,10 +15,20 @@
         <col highlight-col>
         <col highlight-col>
         <col highlight-col>
+        <col highlight-col>
       </colgroup>
       <thead>
         <tr>
           <%= sort_header_tag("name", :caption => "Nombre del Riesgo") %>
+          <th class="currency">
+          <div class="generic-table--sort-header-outer">
+            <div class="generic-table--sort-header">
+              <span>
+                <%= 'Actividad Relacionada'%>
+              </span>
+            </div>
+          </div>
+        </th> 
           <%= sort_header_tag("incharge_id", :caption => "Encargado") %>
           <%= sort_header_tag("impact", :caption => "Impacto") %>
           <%= sort_header_tag("probability", :caption => "Probabilidad") %>
@@ -52,6 +62,7 @@
         <% risks.each do |risk| %>
         <tr id="risk-<%= risk.id %>" >        
           <td><%= risk.name %></td>
+          <td><%= risk.subject%></td>
           <td><%= risk.incharge_name%></td>
           <td><%= risk.impact %></td>
           <td><%= risk.probability %></td>
@@ -67,7 +78,7 @@
             <% if risk.automatic %>
               <%= 'Open Project' %>
             <% else %>
-              <%= 'Autor' %>
+              <%= 'OpenProject Admin' %>
             <% end %>
           </td>
           
@@ -79,13 +90,15 @@
             <% end %>
           </td>
           <td>
+          <% if !risk.automatic %>
           <%= link_to({controller: '/risks', action: 'destroy', id: risk},
                       class: '',
                       method: :delete,
                       data: { confirm: t(:delete_risk_message)}) do %>
             <%= op_icon('button--icon icon-delete') %> 
+            
           <% end %>
-
+          <% end %> 
         
         </td>
         </tr>

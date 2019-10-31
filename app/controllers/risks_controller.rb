@@ -4,7 +4,7 @@ class RisksController < ApplicationController
   around_action :set_time_zone
   before_action :find_project, only: [:index, :new, :create]
   before_action :find_risk, except: [:index, :new, :create]
-  before_action :load_combos, only: [:new, :edit]
+  before_action :load_combos, only: [:new, :edit,:update]
 
   before_action :authorize, except: [:index]
 
@@ -102,8 +102,11 @@ class RisksController < ApplicationController
     sort_init 'id', 'desc'
     sort_update sort_columns
 
-    @risks = Risk.joins("LEFT JOIN users ON users.id = risks.incharge_id")    
-            .select("risks.*, CONCAT(users.firstname,' ',users.lastname) as incharge_name")
+    per_page_param=10
+    
+    @risks = Risk.joins("LEFT JOIN users ON users.id = risks.incharge_id")
+            .joins("LEFT JOIN work_packages ON work_packages.id = risks.user_story_id")      
+            .select("risks.*, CONCAT(users.firstname,' ',users.lastname) as incharge_name, work_packages.subject")
             .where(project_id:@project.id)
             .order(sort_clause)    
             .page(page_param)
@@ -146,7 +149,11 @@ class RisksController < ApplicationController
   end
 
   def find_risk
-    @risk = Risk.find(params[:id])    
+    @risk = Risk
+    .joins("LEFT JOIN work_packages ON work_packages.id = risks.user_story_id")
+                  .select('risks.*,work_packages.subject')
+                  .where("risks.id=?",params[:id]).first
+
     @project = @risk.project
   rescue ActiveRecord::RecordNotFound
     render_404

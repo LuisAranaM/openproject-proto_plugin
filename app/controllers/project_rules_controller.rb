@@ -71,13 +71,14 @@ class ProjectRulesController < ApplicationController
 
     @project_rules = ProjectRule
                 .joins("RIGHT JOIN risk_rules ON risk_rules.id = project_rules.risk_rule_id")
-                  .select('risk_rules.*,project_rules.project_id,project_rules.notifications AS notifications, project_rules.status AS status')
+                  .select('risk_rules.name,risk_rules.description,risk_rules.suggested_actions,
+                        project_rules.id,project_rules.project_id,project_rules.notifications AS notifications, project_rules.status AS status')
                   .where("project_rules.project_id=?",@project.id)
                   .order(sort_clause)    
                   .page(page_param)
                   .per_page(per_page_param) 
 
-  end
+  end  
 
   private
 

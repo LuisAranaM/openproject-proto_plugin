@@ -40,6 +40,9 @@
       <% end %>
     </p>
 
+    <% if @project_rule.name_1 %>
+      <%= toolbar title: t(:parameter_configuration) %>
+    <% end %>
     
     <% if @project_rule.name_1 %>
       <p>
