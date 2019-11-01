@@ -2,7 +2,7 @@
 
     
   
-  <div class="form--field -required col-md-6">
+  <div class="form--field -required">
     <%= f.label 'Nombre *' %>
     <% if !risk.automatic %>
       <%= f.text_field :name, :autocomplete => :off  %>
@@ -15,7 +15,7 @@
   </div>
 
     <% if risk.automatic %>
-      <div class="form--field -required col-md-6">
+      <div class="form--field -required">
       <%= f.label 'Actividad Relacionada' %>
       <%= f.text_field :subject, disabled:true %>
       <% if risk.errors[:subject].length %>
@@ -26,7 +26,7 @@
 
    
 
-      <div class="form--field -required risk-form-width">
+      <div class="form--field -required">
       <%= f.label :description %>
       <% if !risk.automatic %>
         <%= f.text_area :description,rows: "7" %>
@@ -38,7 +38,7 @@
       <% end %>
     </div>
 
-      <div class="form--field -required risk-form-width">
+      <div class="form--field -required">
     <%= f.label 'Encargado' %>
     <%= f.select :incharge_id,
     @project.possible_assignees.sort.map{|u| [u.name, u.id]},
@@ -52,16 +52,16 @@
 <% end %>
 </div>
 
-      <div class="form--field -required risk-form-width">
-      <%= f.label :status %>
+      <p>
+      <%= f.label '¿Resuelto?' %>
       <%= f.check_box :status %> <br />
       <% if risk.errors[:status].length %>
           <span class="risk-error"><%= risk.errors[:status].join(', ') %></span>
       <% end %>
-    </div>
+    </p>
 
   
-      <div class="form--field -required risk-form-width">
+      <div class="form--field -required">
       <%= f.label 'Impacto' %>
       <%= f.select :impact,
       @impacts.sort.map{|string| string},
@@ -76,7 +76,7 @@
     </div>
 
 
-      <div class="form--field -required risk-form-width">
+      <div class="form--field -required">
       <%= f.label 'Probabilidad' %>
       <%= f.select :probability,
       @probabilities.sort.map{|string| string},
@@ -91,7 +91,7 @@
     </div>
 
 
-      <div class="form--field -required risk-form-width">
+      <div class="form--field -required">
       <%= f.label 'Nombre de plan de acción' %>
       <%= f.text_field :action_plan_name, :autocomplete => :off  %>
       <% if risk.errors[:action_plan_name].length %>
@@ -99,7 +99,7 @@
       <% end %>
     </div>
 
-      <div class="form--field -required risk-form-width">
+      <div class="form--field -required">
       <%= f.label 'Descripción del plan de acción' %>
       <%= f.text_area :action_plan_description,rows: "7" %>
       <% if risk.errors[:action_plan_description].length %>
@@ -110,7 +110,7 @@
 
 
 
-      <div class="form--field -required risk-form-width">
+      <div class="form--field -required">
       <%= f.label 'Inicio de plan de acción' %>
       <%= f.text_field :first_date,
             class: '-augmented-datepicker', :autocomplete => :off %>
@@ -119,7 +119,7 @@
       <% end %>
     </div>
 
-      <div class="form--field -required risk-form-width">
+      <div class="form--field -required">
       <%= f.label 'Fin de plan de acción' %>
       <%= f.text_field :last_date,
         class: '-augmented-datepicker', :autocomplete => :off  %>
